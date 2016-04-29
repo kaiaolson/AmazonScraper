@@ -5,9 +5,9 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new product_params
-    if @product.save
-      render json: @product
+    service = Products::CreateProduct.new(params: product_params)
+    if service.call
+      render json: Product.last
     else
       render json: @product.errors, status: :unprocessable_entity
     end
