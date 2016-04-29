@@ -2,12 +2,14 @@ class ProductsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def new
+    @product = Product.new
   end
 
   def create
     service = Products::CreateProduct.new(params: product_params)
     if service.call
-      render json: Product.last
+      @product = Product.last
+      render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -18,6 +20,11 @@ class ProductsController < ApplicationController
   end
 
   def index
+    @products = Product.all
+    respond_to do |format|
+      format.html {render}
+      format.json {render json: @products}
+    end
   end
 
   private

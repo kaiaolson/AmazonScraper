@@ -2,10 +2,6 @@ var ProductForm = React.createClass({
   getInitialState: function(){
     return {productUrl: "", productName: ""};
   },
-  upcaseIt: function(){
-    var userInput = this.refs.userInput.value;
-    this.setState({productUrl: userInput.toUpperCase()})
-  },
   handleTextChange: function(e) {
     this.setState({productUrl: e.target.value});
   },
@@ -21,7 +17,7 @@ var ProductForm = React.createClass({
       type: 'POST',
       data: {product: {product_url: this.state.productUrl}},
       success: function(data) {
-        this.displayProduct(data.name);
+        this.displayProduct(data);
       }.bind(this),
       error: function(xhr, status, err) {
         console.error("/products", status, err.toString());
@@ -29,8 +25,8 @@ var ProductForm = React.createClass({
     });
     this.setState({productUrl: ''});
   },
-  displayProduct: function(name){
-    this.setState({productName: name});
+  displayProduct: function(product){
+    this.setState({productName: product.name});
   },
   render: function() {
     return <div>
@@ -38,7 +34,7 @@ var ProductForm = React.createClass({
               <input type="text" ref="userInput" name="product_url" value={this.state.productUrl} onChange={this.handleTextChange}/>
               <input type="submit" value="Get Product" ></input>
             </form>
-            <div>{this.state.productName}</div>
+            <Product url={this.state.productUrl} name={this.state.productName} />
            </div>;
   }
 });

@@ -3,7 +3,7 @@ class Products::CreateProduct
   include Virtus.model
 
   attribute :params, Hash
-  
+
   attribute :product, Product
 
   def call
