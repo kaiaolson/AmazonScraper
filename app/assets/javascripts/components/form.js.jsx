@@ -39,6 +39,7 @@ var ProductForm = React.createClass({
     return <div>
             <form onSubmit={this.handleSubmit}>
               <input type="text" ref="userInput" name="product_url" value={this.state.inputUrl} onChange={this.handleTextChange}/>
+              <input type='hidden' name='authenticity_token' value={this.props.authenticity_token} />
               <input type="submit" value="Get Product" ></input>
             </form>
             <Product url={this.state.productUrl} target="_blank" name={this.state.productName} description={this.state.productDescription}/>
